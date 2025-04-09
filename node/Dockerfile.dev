@@ -1,0 +1,27 @@
+# Specify node version to make the build deterministic.
+# This ARG is available globally to all stages in this file.
+ARG NODE_VERSION=22.13.1
+
+# Setting 'USER node' forces us to keep everything in /home/node, otherwise
+# there is a permissions error at build time. The thing is that by default in
+# node image the only dir owned by the 'node' user is the /home/node dir. When
+# you create/set another WORKDIR, it will ALWAYS be owned by the 'root', hence
+# the build will always be failing with permissions error.
+
+FROM node:${NODE_VERSION}-slim AS base
+# If you use the alpine image, download Bash package > install Bash (to be able to execute scripts) >
+# > remove the downloaded package to free up space (Bash remains installed)
+# RUN apk add --upgrade --no-cache bash
+USER node
+WORKDIR /home/node
+COPY --chown=node:node package*.json ./
+
+FROM base AS development
+USER node
+WORKDIR /home/node
+# Install all deps including development
+RUN npm ci --include=dev
+# Copy the whole dir instead of only "./src", otherwise directories with test
+# files won't be included
+COPY --chown=node:node . .
+CMD [ "npm", "run", "serve" ]

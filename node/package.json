@@ -1,0 +1,38 @@
+{
+  "name": "dockerized-typescript-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "serve": "nodemon"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express-serve-static-core": "^4.19.6",
+    "@types/node": "^22.14.0",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "@types/express": "^5.0.1",
+    "@types/sequelize": "^4.28.20",
+    "express": "^4.17.2",
+    "express-serve-static-core": "^0.1.1",
+    "joi": "^17.13.3",
+    "pg": "^8.14.1",
+    "prisma": "^6.5.0",
+    "sequelize": "^6.37.7"
+  },
+  "resolutions": {
+    "@types/express-serve-static-core": "4.17.21",
+    "@types/express": "4.17.2"
+  }
+}

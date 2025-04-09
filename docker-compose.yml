@@ -1,0 +1,42 @@
+services:
+  node:
+    container_name: node
+    build:
+      context: ./node
+      dockerfile: Dockerfile.dev
+    init: true
+    tty: true
+    healthcheck:
+      test: "curl --fail http://localhost:8080"
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      # Recompile code on changes
+      - ./node:/home/node
+      # Set the container timezone to the time zone of host machine
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    depends_on:
+      - postgres
+    env_file:
+      - ./node/.env
+      - ./postgres/.env
+
+  postgres:
+    container_name: postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ./postgres/.env
+    ports:
+      - 5433:5432
+    volumes:
+      - ./postgres/volume/:/var/lib/postgresql/data
