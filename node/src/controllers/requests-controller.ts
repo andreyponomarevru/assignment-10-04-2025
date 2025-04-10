@@ -9,7 +9,7 @@ export async function createRequest(req: Request, res: Response) {
     });
     res.status(201).json(newRequest);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
 }
@@ -61,8 +61,10 @@ export async function moveToPending(req: Request, res: Response) {
 
 export async function moveFromPendingToFinished(req: Request, res: Response) {
   try {
-    if (await requests.isPending(Number(req.params.id))) {
-      await requests.mvToFinished(Number(req.params.id), req.body.response);
+    const requestId = Number(req.params.id);
+
+    if (await requests.isPending(requestId)) {
+      await requests.mvToFinished(requestId, req.body.response);
       res.status(204).end();
       return;
     }
