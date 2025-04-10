@@ -91,12 +91,10 @@ export const requests = {
   async mvToFinished(requestId: number, response = null) {
     const finishedStatusId = 3;
 
-    const r = await prisma.request.update({
+    await prisma.request.update({
       data: { statusId: finishedStatusId, response },
       where: { id: requestId },
     });
-
-    console.log(r);
   },
 
   async isPending(requestId: number) {

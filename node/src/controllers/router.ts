@@ -75,5 +75,11 @@ requestsRouter.post(
     }),
     "params",
   ),
+  validate(
+    Joi.object({
+      response: Joi.string().max(400).optional(),
+    }).optional(),
+    "body",
+  ),
   moveFromPendingToFinished,
 );
