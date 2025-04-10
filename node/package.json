@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
+    "initdb": "npx prisma migrate dev --name init && npx prisma db seed",
     "serve": "nodemon"
   },
   "prisma": {
