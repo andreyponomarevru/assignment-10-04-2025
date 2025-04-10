@@ -1,3 +1,5 @@
+Для запуска проекта: `docker compose up ` > выполнить изнутри контейнера 'node' `npm run initdb`
+
 # API
 
 - `POST /api/requests` — Создать обращение
